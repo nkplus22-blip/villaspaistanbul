@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Početna | Villa Spa Istanbul</title>
+    <style>
+        /* Osnovne postavke i reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #faf9f6; /* Blaga, topla "spa" pozadina */
+        }
+
+        /* Navigacija */
+        header {
+            background-color: #1a1a1a; /* Elegantna tamna boja */
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #c5a880; /* Zlatno-bež boja za luksuzni dojam */
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #c5a880;
+        }
+
+        /* Glavni Hero dio */
+        .hero {
+            /* Placeholder slika, ovdje će kasnije ići prava slika vile/spa centra */
+            background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #c5a880;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #c5a880;
+            color: #1a1a1a;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 3px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #1a1a1a;
+        }
+
+        /* Glavni sadržaj */
+        main {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        main h2 {
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            font-size: 2.5rem;
+        }
+
+        main p {
+            color: #555;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Podnožje (Footer) */
+        footer {
+            background-color: #1a1a1a;
+            color: #ccc;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsivnost za manje ekrane */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .nav-links li {
+                margin: 0 10px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Zaglavlje i Navigacija -->
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">Villa Spa Istanbul</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Početna</a></li>
+                <li><a href="o-nama.html">O nama</a></li>
+                <li><a href="usluge.html">Usluge / Spa</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Sekcija -->
+    <section class="hero">
+        <h1>Villa Spa Istanbul</h1>
+        <p>Doživite vrhunski odmor i relaksaciju u srcu Istanbula. Vaša privatna oaza mira, luksuza i spa tretmana.</p>
+        <a href="#vise" class="btn">Saznajte više</a>
+    </section>
+
+    <!-- Glavni sadržaj -->
+    <main id="vise">
+        <h2>Dobrodošli u Vaš privatni raj</h2>
+        <p>Villa Spa Istanbul nudi jedinstven spoj tradicionalnog turskog gostoprimstva i modernog luksuza. Opustite se u našem privatnom spa centru, uživajte u autentičnim tretmanima i pobjegnite od gradske vreve.</p>
+    </main>
+
+    <!-- Podnožje -->
+    <footer>
+        <p>&copy; 2026 Villa Spa Istanbul. Sva prava zadržana.</p>
+    </footer>
+
+</body>
+</html>
