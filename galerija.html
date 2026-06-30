@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerija | Villa Spa Istanbul</title>
+    <style>
+        /* Osnovne postavke i preuzeti stilovi */
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #d4af37; 
+            --bg-color: #faf9f6;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', 'Segoe UI', serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Navigacija */
+        header {
+            background-color: rgba(26, 26, 26, 0.98);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-family: 'Segoe UI', sans-serif;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                right: -100%;
+                background-color: rgba(26, 26, 26, 0.98);
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                transition: 0.4s;
+                padding: 20px 0;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 15px 0; }
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* Hero za Galeriju (Koristi villa2.jpg kao pozadinu) */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('villa2.jpg') no-repeat center center/cover;
+            height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            margin-top: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+        }
+
+        /* Galerija Grid */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .gallery-container p {
+            font-family: 'Segoe UI', sans-serif;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 250px;
+            gap: 15px;
+            grid-auto-flow: dense;
+        }
+
+        /* Neke slike pravimo većim (span) za elegantniji izgled mreže */
+        .gallery-item-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Poseban naglasak na svaku 4. sliku da zauzme 2 reda/kolone (opcionalno za veće ekrane) */
+        @media (min-width: 768px) {
+            .gallery-item-wrapper:nth-child(4n) {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .gallery-item-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 26, 0.4);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .gallery-item-wrapper:hover .gallery-item {
+            transform: scale(1.1);
+        }
+
+        .gallery-item-wrapper:hover::after {
+            opacity: 1;
+        }
+
+        /* Lightbox (Modal za prikaz preko cijelog ekrana) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: #aaa;
+            text-align: center;
+            padding: 30px 20px;
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigacija -->
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">Villa Spa</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Početna</a></li>
+                <li><a href="galerija.html" class="active">Galerija</a></li>
+                <li><a href="kontakt.html">Kontakt/Rezervacije</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Header Sekcija -->
+    <section class="page-header">
+        <h1>Vizuelno Putovanje</h1>
+    </section>
+
+    <!-- Galerija Sadržaj -->
+    <main class="gallery-container">
+        <p>Zavirite u naš ekskluzivni prostor. Svaki detalj Villa Spa Istanbul dizajniran je kako bi vam pružio ultimativno iskustvo luksuza i opuštanja.</p>
+        
+        <div class="gallery-grid">
+            <!-- Slike od villa2.jpg do villa15.jpg -->
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa2.jpg')">
+                <img src="villa2.jpg" alt="Ambijent 2" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa3.jpg')">
+                <img src="villa3.jpg" alt="Ambijent 3" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa4.jpg')">
+                <img src="villa4.jpg" alt="Ambijent 4" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa5.jpg')">
+                <img src="villa5.jpg" alt="Ambijent 5" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa6.jpg')">
+                <img src="villa6.jpg" alt="Ambijent 6" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa7.jpg')">
+                <img src="villa7.jpg" alt="Ambijent 7" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa8.jpg')">
+                <img src="villa8.jpg" alt="Ambijent 8" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa9.jpg')">
+                <img src="villa9.jpg" alt="Ambijent 9" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa10.jpg')">
+                <img src="villa10.jpg" alt="Ambijent 10" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa11.jpg')">
+                <img src="villa11.jpg" alt="Ambijent 11" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa12.jpg')">
+                <img src="villa12.jpg" alt="Ambijent 12" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa13.jpg')">
+                <img src="villa13.jpg" alt="Ambijent 13" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa14.jpg')">
+                <img src="villa14.jpg" alt="Ambijent 14" class="gallery-item" loading="lazy">
+            </div>
+            <div class="gallery-item-wrapper" onclick="openLightbox('villa15.jpg')">
+                <img src="villa15.jpg" alt="Ambijent 15" class="gallery-item" loading="lazy">
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox Element -->
+    <div id="lightboxModal" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightboxImage">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Villa Spa Istanbul. Sva prava zadržana.</p>
+    </footer>
+
+    <!-- Skripte -->
+    <script>
+        // Hamburger Menu Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Lightbox Logic
+        const lightbox = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImage');
+
+        function openLightbox(imageSrc) {
+            lightbox.style.display = 'flex'; // Koristimo flex za centriranje
+            lightboxImg.src = imageSrc;
+            // Onemogućiti scroll na pozadini kada je modal otvoren
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            // Omogućiti scroll ponovo
+            document.body.style.overflow = 'auto';
+        }
+
+        // Zatvaranje na klik izvan slike
+        lightbox.addEventListener('click', function(e) {
+            if (e.target !== lightboxImg) {
+                closeLightbox();
+            }
+        });
+
+        // Zatvaranje na Escape tipku
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+        });
+    </script>
+
+</body>
+</html>
