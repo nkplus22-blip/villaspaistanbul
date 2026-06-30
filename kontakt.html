@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt i Rezervacije | Villa Spa Istanbul</title>
+    <style>
+        /* Osnovne postavke i preuzeti stilovi sa početne */
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2c2c2c;
+            --accent-color: #d4af37; 
+            --bg-color: #faf9f6;
+            --text-color: #333;
+            --light-gray: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', 'Segoe UI', serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Navigacija */
+        header {
+            background-color: rgba(26, 26, 26, 0.98);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-family: 'Segoe UI', sans-serif;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                right: -100%;
+                background-color: rgba(26, 26, 26, 0.98);
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                transition: 0.4s;
+                padding: 20px 0;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 15px 0; }
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* Hero za Kontakt */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('villa1.jpg') no-repeat center center/cover;
+            height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            margin-top: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+        }
+
+        /* Glavni kontejner za formu i detalje */
+        .booking-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        /* Forma stilovi */
+        .booking-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .booking-form h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #fcfcfc;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Odabir Paketa (Kartice) */
+        .packages {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .package-card {
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .package-card.selected {
+            border-color: var(--accent-color);
+            background-color: rgba(212, 175, 55, 0.05);
+        }
+
+        .package-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .package-card p {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .package-card .price {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-top: 10px;
+            display: block;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Dodatne usluge (Checkbox) */
+        .addons {
+            margin-bottom: 30px;
+        }
+        
+        .addon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .addon-item label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .addon-item input {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--accent-color);
+        }
+
+        .addon-price {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: 'Segoe UI', sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #b5952f;
+        }
+
+        /* Sidebar: Sažetak i Kontakt Info */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .summary-box {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-box h3 {
+            color: var(--accent-color);
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-details {
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .summary-details div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .total-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .contact-info {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .contact-info p {
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 15px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-small {
+            width: 100%;
+            height: 200px;
+            border: 0;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 992px) {
+            .booking-section { grid-template-columns: 1fr; }
+            .summary-box { position: static; }
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .packages { grid-template-columns: 1fr; }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: #aaa;
+            text-align: center;
+            padding: 30px 20px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">Villa Spa</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Početna</a></li>
+                <li><a href="galerija.html">Galerija</a></li>
+                <li><a href="kontakt.html" class="active">Kontakt/Rezervacije</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Vaša Rezervacija</h1>
+    </section>
+
+    <div class="booking-section">
+        
+        <div class="booking-form">
+            <h2>Detalji vašeg boravka</h2>
+            <form id="reservationForm">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Datum Prijave (Check-in)</label>
+                        <input type="date" id="checkin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Datum Odjave (Check-out)</label>
+                        <input type="date" id="checkout" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Odrasli</label>
+                        <select id="adults">
+                            <option value="1">1 Odrasla osoba</option>
+                            <option value="2" selected>2 Odrasle osobe</option>
+                            <option value="3">3 Odrasle osobe</option>
+                            <option value="4">4 Odrasle osobe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Djeca</label>
+                        <select id="children">
+                            <option value="0">Bez djece</option>
+                            <option value="1">1 Dijete</option>
+                            <option value="2">2 Djece</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px; font-family: 'Segoe UI', sans-serif;">Odaberite Paket</h3>
+                <div class="packages">
+                    <div class="package-card selected" onclick="selectPackage(this, 150, 'Standardni Spa Paket')">
+                        <h3>Standardni Spa Paket</h3>
+                        <p>Noćenje uz neograničeno korištenje bazena i saune.</p>
+                        <span class="price">150 BAM / noć</span>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, 250, 'Kraljevski Spa & Relax')">
+                        <h3>Kraljevski Spa & Relax</h3>
+                        <p>Noćenje, doručak u krevetu, pristup svim spa zonama i 1h masaže.</p>
+                        <span class="price">250 BAM / noć</span>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px; font-family: 'Segoe UI', sans-serif;">Personalizujte Vaš Boravak</h3>
+                <div class="addons">
+                    <div class="addon-item">
+                        <label><input type="checkbox" class="addon-checkbox" value="50" data-name="Boca Šampanjca"> Boca Šampanjca po dolasku</label>
+                        <span class="addon-price">+ 50 BAM</span>
+                    </div>
+                    <div class="addon-item">
+                        <label><input type="checkbox" class="addon-checkbox" value="100" data-name="Privatni Kuhar (Večera)"> Privatni Kuhar (Večera za dvoje)</label>
+                        <span class="addon-price">+ 100 BAM</span>
+                    </div>
+                    <div class="addon-item">
+                        <label><input type="checkbox" class="addon-checkbox" value="80" data-name="Aroma Terapija"> Ekstra Aroma Terapija Masaža</label>
+                        <span class="addon-price">+ 80 BAM</span>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px; font-family: 'Segoe UI', sans-serif;">Lični Podaci</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ime i Prezime</label>
+                        <input type="text" placeholder="Unesite vaše ime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Adresa</label>
+                        <input type="email" placeholder="vas@email.com" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Broj Telefona</label>
+                    <input type="tel" placeholder="+387 6X XXX XXX" required>
+                </div>
+                <div class="form-group">
+                    <label>Posebni zahtjevi (Opcionalno)</label>
+                    <textarea rows="4" placeholder="Vaše napomene ili specijalne želje..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Pošalji Upit za Rezervaciju</button>
+            </form>
+        </div>
+
+        <div class="sidebar">
+            
+            <div class="summary-box">
+                <h3>Vaš Boravak</h3>
+                <div class="summary-details">
+                    <div>
+                        <span>Dolazak:</span>
+                        <strong id="sum-checkin">-</strong>
+                    </div>
+                    <div>
+                        <span>Odlazak:</span>
+                        <strong id="sum-checkout">-</strong>
+                    </div>
+                    <div style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 10px;">
+                        <span>Broj noćenja:</span>
+                        <strong id="sum-nights">0</strong>
+                    </div>
+                    
+                    <div>
+                        <span id="sum-package-name">Standardni Spa Paket</span>
+                        <strong id="sum-package-price">150 BAM / noć</strong>
+                    </div>
+                    <div id="sum-addons-container" style="color: var(--accent-color); font-size: 0.85rem; margin-top: 10px;">
+                        </div>
+                </div>
+                <div class="total-price">
+                    <span>UKUPNO:</span>
+                    <span id="sum-total">0 BAM</span>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px; color: #888; text-align: center;">*Ovo je informativni izračun. Konačna potvrda stiže na email.</p>
+            </div>
+
+            <div class="contact-info">
+                <h3>Kontaktirajte Nas</h3>
+                <p>📞 +387 6X XXX XXX</p>
+                <p>✉️ info@villaspa.ba</p>
+                <p>📍 VCM5+MFJ, Gradačac, Bosna i Hercegovina</p>
+                
+                <iframe class="map-small" src="https://maps.google.com/maps?q=44.8842180,18.4086392&hl=bs&z=15&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Villa Spa Istanbul. Sva prava zadržana.</p>
+    </footer>
+
+    <script>
+        // Hamburger Menu Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Booking Logic (Dynamic Price Calculator)
+        let basePrice = 150;
+        let selectedPackageName = 'Standardni Spa Paket';
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+        const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+
+        // Postavljanje današnjeg datuma kao minimalnog
+        const today = new Date().toISOString().split('T')[0];
+        checkinInput.setAttribute('min', today);
+        checkoutInput.setAttribute('min', today);
+
+        function updateSummary() {
+            const checkinVal = checkinInput.value;
+            const checkoutVal = checkoutInput.value;
+            let nights = 0;
+
+            if (checkinVal && checkoutVal) {
+                const date1 = new Date(checkinVal);
+                const date2 = new Date(checkoutVal);
+                const diffTime = Math.abs(date2 - date1);
+                nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                // Sprečavanje negativnih noćenja
+                if(date2 <= date1) {
+                    alert("Datum odjave mora biti nakon datuma prijave.");
+                    checkoutInput.value = "";
+                    nights = 0;
+                }
+            }
+
+            document.getElementById('sum-checkin').innerText = checkinVal ? checkinVal : '-';
+            document.getElementById('sum-checkout').innerText = checkoutVal && nights > 0 ? checkoutVal : '-';
+            document.getElementById('sum-nights').innerText = nights;
+            document.getElementById('sum-package-name').innerText = selectedPackageName;
+            document.getElementById('sum-package-price').innerText = basePrice + " BAM / noć";
+
+            // Računanje dodataka
+            let addonsTotal = 0;
+            let addonsHTML = '';
+            addonCheckboxes.forEach(box => {
+                if(box.checked) {
+                    addonsTotal += parseInt(box.value);
+                    addonsHTML += `<div>+ ${box.getAttribute('data-name')} (${box.value} BAM)</div>`;
+                }
+            });
+            document.getElementById('sum-addons-container').innerHTML = addonsHTML;
+
+            // Ukupna Cijena
+            let total = (basePrice * nights) + addonsTotal;
+            if (nights === 0) total = 0; // Ne prikazuj cijenu ako datumi nisu odabrani
+            document.getElementById('sum-total').innerText = total + " BAM";
+        }
+
+        // Promjena paketa
+        function selectPackage(element, price, name) {
+            document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            basePrice = price;
+            selectedPackageName = name;
+            updateSummary();
+        }
+
+        // Event Listeneri
+        checkinInput.addEventListener('change', updateSummary);
+        checkoutInput.addEventListener('change', updateSummary);
+        addonCheckboxes.forEach(box => box.addEventListener('change', updateSummary));
+
+        // Inicijalni poziv
+        updateSummary();
+    </script>
+
+</body>
+</html>
